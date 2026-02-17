@@ -5,10 +5,10 @@ import os
 
 app = Flask(__name__)
 
-# مفتاح Groq من Environment Variable
+# قراءة مفتاح Groq من متغير البيئة
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 
-# HTML مدمج داخل الكود (لا يحتاج templates folder)
+# HTML مدمج داخل الكود (لا يحتاج مجلد templates)
 html_code = """
 <!DOCTYPE html>
 <html lang="ar">
@@ -91,12 +91,12 @@ def tts():
         json={
             "model": "canopylabs/orpheus-arabic-saudi",
             "input": text,
-            "voice": "amjad"
+            "voice": "aisha"  # صوت صحيح من قائمة API
         }
     )
 
     if response.status_code != 200:
-        return f"خطأ من API: {response.text}", 500
+        return f"خطأ من واجهة برمجة التطبيقات: {response.text}", 500
 
     return send_file(
         io.BytesIO(response.content),
