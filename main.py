@@ -5,10 +5,10 @@ import os
 
 app = Flask(__name__)
 
-# قراءة مفتاح Groq من متغير البيئة
+# قراءة مفتاح Groq من Environment Variable
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
 
-# HTML مدمج داخل الكود (لا يحتاج مجلد templates)
+# HTML مدمج داخل الكود
 html_code = """
 <!DOCTYPE html>
 <html lang="ar">
@@ -91,7 +91,8 @@ def tts():
         json={
             "model": "canopylabs/orpheus-arabic-saudi",
             "input": text,
-            "voice": "aisha"  # صوت صحيح من قائمة API
+            "voice": "aisha",             # صوت صحيح
+            "response_format": "wav"      # صيغة WAV المطلوبة من API
         }
     )
 
@@ -100,9 +101,9 @@ def tts():
 
     return send_file(
         io.BytesIO(response.content),
-        mimetype="audio/mpeg",
+        mimetype="audio/wav",
         as_attachment=True,
-        download_name="speech.mp3"
+        download_name="speech.wav"
     )
 
 if __name__ == "__main__":
